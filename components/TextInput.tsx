@@ -5,18 +5,27 @@ interface TextInputProps {
   name: string;
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
+  isTextArea?: boolean;
 }
 
-export function TextInput({ name, value, setValue }: TextInputProps) {
+export function TextInput({
+  name,
+  value,
+  setValue,
+  isTextArea = false,
+}: TextInputProps) {
   const nameInTitleCase = toTitleCase(name);
+  const InputTag = isTextArea ? 'textarea' : 'input';
+
   return (
     <div>
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
         {nameInTitleCase}
       </label>
       <div className="mt-1">
-        <input
-          type="text"
+        <InputTag
+          type={isTextArea ? undefined : 'text'}
+          rows={isTextArea ? 4 : undefined}
           name={name}
           value={value}
           onChange={(e) => setValue(e.target.value)}
