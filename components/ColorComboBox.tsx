@@ -1,6 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { classNames, toTitleCase } from '../utils/utils';
 
 const colors = [
@@ -26,11 +26,18 @@ const colors = [
   'fuchsia',
   'pink',
   'rose',
-];
+] as const;
 
-export function ColorComboBox() {
+interface ColorComboBoxProps {
+  selectedColor: string;
+  setSelectedColor: Dispatch<SetStateAction<string>>;
+}
+
+export function ColorComboBox({
+  selectedColor,
+  setSelectedColor,
+}: ColorComboBoxProps) {
   const [query, setQuery] = useState('');
-  const [selectedColor, setSelectedColor] = useState('rose');
 
   const filteredColors =
     query === ''
@@ -44,8 +51,6 @@ export function ColorComboBox() {
       <Combobox.Label className="block text-sm font-medium text-gray-700">
         Color
       </Combobox.Label>
-      {/*  */}
-      <div className="hidden bg-slate-600 bg-gray-600 bg-zinc-600 bg-neutral-600 bg-stone-600 bg-red-600 bg-orange-600 bg-amber-600 bg-yellow-600 bg-lime-600 bg-green-600 bg-emerald-600 bg-teal-600 bg-cyan-600 bg-sky-600 bg-blue-600 bg-indigo-600 bg-violet-600 bg-purple-600 bg-fuchsia-600 bg-pink-600 bg-rose-600"></div>
       <div className="relative mt-1">
         <Combobox.Input
           className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
@@ -75,6 +80,8 @@ export function ColorComboBox() {
                 {({ active, selected }) => (
                   <>
                     <div className="flex items-center">
+                      {/* Listed all classes so they get detected and added to the tailwind css bundle */}
+                      {/* bg-slate-600 bg-gray-600 bg-zinc-600 bg-neutral-600 bg-stone-600 bg-red-600 bg-orange-600 bg-amber-600 bg-yellow-600 bg-lime-600 bg-green-600 bg-emerald-600 bg-teal-600 bg-cyan-600 bg-sky-600 bg-blue-600 bg-indigo-600 bg-violet-600 bg-purple-600 bg-fuchsia-600 bg-pink-600 bg-rose-600 */}
                       <span
                         className={`h-6 w-6 flex-shrink-0 rounded-sm bg-${color}-600`}
                       ></span>

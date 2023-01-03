@@ -8,12 +8,16 @@ export default function Home() {
   const BASE_IMAGE_API_URL = '/api/og';
 
   const [title, setTitle] = useState('OG Image');
+  const [color, setColor] = useState('rose');
   const [imageUrl, setImageUrl] = useState(BASE_IMAGE_API_URL);
 
   const updateImageUrl = () => {
     const params = [];
     if (title) {
       params.push(`title=${title}`);
+    }
+    if (color) {
+      params.push(`color=${color}`);
     }
 
     setImageUrl(`${BASE_IMAGE_API_URL}?${params.join('&')}`);
@@ -34,7 +38,7 @@ export default function Home() {
         {/* LHS Form */}
         <div className="space-y-6">
           <TextInput name="title" value={title} setValue={setTitle} />
-          <ColorComboBox />
+          <ColorComboBox selectedColor={color} setSelectedColor={setColor} />
           <button
             type="button"
             onClick={updateImageUrl}
