@@ -20,7 +20,7 @@ export default async function handler(req: NextRequest) {
   const DEFAULT_TITLE = 'OG Image';
   const DEFAULT_DESCRIPTION =
     'Add `title` and `description` to the URL as query params to populate the card with your own content.';
-  const DEFAULT_COLOR = 'rose';
+  const DEFAULT_THEME = 'rose';
 
   const [satoshi, clashDisplay, aloeVera] = await Promise.all([
     getSatoshi,
@@ -39,14 +39,14 @@ export default async function handler(req: NextRequest) {
     ? searchParams.get('description')
     : DEFAULT_DESCRIPTION;
 
-  const color = searchParams.has('color')
-    ? searchParams.get('color')
-    : DEFAULT_COLOR;
+  const theme = searchParams.has('theme')
+    ? searchParams.get('theme')
+    : DEFAULT_THEME;
 
   return new ImageResponse(
     (
       <div
-        tw={`h-full w-full px-20 py-16 bg-${color}-200 flex flex-col justify-between`}
+        tw={`h-full w-full px-20 py-16 bg-${theme}-200 flex flex-col justify-between`}
       >
         <h1 tw="text-8xl leading-none" style={{ fontFamily: 'ClashDisplay' }}>
           {title}
@@ -62,10 +62,10 @@ export default async function handler(req: NextRequest) {
             src="https://og.anuragroy.dev/assets/memoji.png"
             height="56px"
             width="56px"
-            tw={`mr-2 bg-${color}-300 rounded-full`}
+            tw={`mr-2 bg-${theme}-300 rounded-full`}
           />
           <span
-            tw={`text-5xl text-${color}-600 mr-auto`}
+            tw={`text-5xl text-${theme}-600 mr-auto`}
             style={{ fontFamily: 'AloeVera' }}
           >
             {WEBSITE}

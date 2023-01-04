@@ -3,7 +3,8 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { classNames, toTitleCase } from '../utils/utils';
 
-const colors = [
+// All tailwind color names
+const themes = [
   'slate',
   'gray',
   'zinc',
@@ -28,34 +29,34 @@ const colors = [
   'rose',
 ] as const;
 
-interface ColorComboBoxProps {
-  selectedColor: string;
-  setSelectedColor: Dispatch<SetStateAction<string>>;
+interface ThemeComboBoxProps {
+  selectedTheme: string;
+  setSelectedTheme: Dispatch<SetStateAction<string>>;
 }
 
-export function ColorComboBox({
-  selectedColor,
-  setSelectedColor,
-}: ColorComboBoxProps) {
+export function ThemeComboBox({
+  selectedTheme,
+  setSelectedTheme,
+}: ThemeComboBoxProps) {
   const [query, setQuery] = useState('');
 
-  const filteredColors =
+  const filteredThemes =
     query === ''
-      ? colors
-      : colors.filter((color) => {
-          return color.toLowerCase().includes(query.toLowerCase());
+      ? themes
+      : themes.filter((theme) => {
+          return theme.toLowerCase().includes(query.toLowerCase());
         });
 
   return (
-    <Combobox as="div" value={selectedColor} onChange={setSelectedColor}>
+    <Combobox as="div" value={selectedTheme} onChange={setSelectedTheme}>
       <Combobox.Label className="block text-sm font-medium text-gray-700">
-        Color
+        Theme
       </Combobox.Label>
       <div className="relative mt-1">
         <Combobox.Input
           className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 sm:text-sm"
           onChange={(event) => setQuery(event.target.value)}
-          displayValue={(color: string) => toTitleCase(color)}
+          displayValue={(theme: string) => toTitleCase(theme)}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronUpDownIcon
@@ -64,12 +65,12 @@ export function ColorComboBox({
           />
         </Combobox.Button>
 
-        {filteredColors.length > 0 && (
+        {filteredThemes.length > 0 && (
           <Combobox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredColors.map((color) => (
+            {filteredThemes.map((theme) => (
               <Combobox.Option
-                key={color}
-                value={color}
+                key={theme}
+                value={theme}
                 className={({ active }) =>
                   classNames(
                     'relative cursor-default select-none py-2 pl-3 pr-9',
@@ -83,7 +84,7 @@ export function ColorComboBox({
                       {/* Listed all classes so they get detected and added to the tailwind css bundle */}
                       {/* bg-slate-600 bg-gray-600 bg-zinc-600 bg-neutral-600 bg-stone-600 bg-red-600 bg-orange-600 bg-amber-600 bg-yellow-600 bg-lime-600 bg-green-600 bg-emerald-600 bg-teal-600 bg-cyan-600 bg-sky-600 bg-blue-600 bg-indigo-600 bg-violet-600 bg-purple-600 bg-fuchsia-600 bg-pink-600 bg-rose-600 */}
                       <span
-                        className={`h-6 w-6 flex-shrink-0 rounded-sm bg-${color}-600`}
+                        className={`h-6 w-6 flex-shrink-0 rounded-sm bg-${theme}-600`}
                       ></span>
                       <span
                         className={classNames(
@@ -91,7 +92,7 @@ export function ColorComboBox({
                           selected && 'font-semibold'
                         )}
                       >
-                        {color}
+                        {theme}
                       </span>
                     </div>
 

@@ -1,9 +1,9 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid';
 import Head from 'next/head';
 import { useState } from 'react';
-import { ColorComboBox } from '../components/ColorComboBox';
 import { CopyButton } from '../components/CopyButton';
 import { TextInput } from '../components/TextInput';
+import { ThemeComboBox } from '../components/ThemeComboBox';
 
 export default function Home() {
   const BASE_IMAGE_API_URL = '/api/og';
@@ -12,10 +12,9 @@ export default function Home() {
   const [description, setDescription] = useState(
     'Generate open graph images on the fly with custom titles, descriptions and color schemes!'
   );
-  const [color, setColor] = useState('violet');
-  const [imageUrl, setImageUrl] = useState(BASE_IMAGE_API_URL);
+  const [theme, setTheme] = useState('sky');
 
-  const updateImageUrl = () => {
+  const getImageUrl = () => {
     const params = [];
     if (title) {
       params.push(`title=${encodeURIComponent(title)}`);
@@ -23,12 +22,14 @@ export default function Home() {
     if (description) {
       params.push(`description=${encodeURIComponent(description)}`);
     }
-    if (color) {
-      params.push(`color=${encodeURIComponent(color)}`);
+    if (theme) {
+      params.push(`theme=${encodeURIComponent(theme)}`);
     }
 
-    setImageUrl(`${BASE_IMAGE_API_URL}?${params.join('&')}`);
+    return `${BASE_IMAGE_API_URL}?${params.join('&')}`;
   };
+
+  const [imageUrl, setImageUrl] = useState(getImageUrl());
 
   return (
     <>
@@ -51,13 +52,13 @@ export default function Home() {
             setValue={setDescription}
             isTextArea={true}
           />
-          <ColorComboBox selectedColor={color} setSelectedColor={setColor} />
+          <ThemeComboBox selectedTheme={theme} setSelectedTheme={setTheme} />
           <button
             type="button"
-            onClick={updateImageUrl}
+            onClick={() => setImageUrl(getImageUrl())}
             className="ml-auto mt-8 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
           >
-            Preview and generate URL
+            Update preview and URL
             <ArrowLongRightIcon className="ml-3 h-5 w-5" aria-hidden="true" />
           </button>
         </div>
@@ -65,7 +66,11 @@ export default function Home() {
         <div className="space-y-6">
           <div>
             <p className="text-sm font-medium text-gray-700">Preview</p>
-            <img src={imageUrl} alt="OG Image" className="mt-1 rounded-md" />
+            <img
+              src={imageUrl}
+              alt="OG Image"
+              className="mt-1 rounded-md aspect-[1200/630] w-full"
+            />
           </div>
           <div>
             <div className="flex justify-between items-end">
