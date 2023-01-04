@@ -5,6 +5,7 @@ interface TextInputProps {
   name: string;
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
+  placeHolder: string;
   isTextArea?: boolean;
 }
 
@@ -12,6 +13,7 @@ export function TextInput({
   name,
   value,
   setValue,
+  placeHolder,
   isTextArea = false,
 }: TextInputProps) {
   const nameInTitleCase = toTitleCase(name);
@@ -28,6 +30,7 @@ export function TextInput({
           rows={isTextArea ? 4 : undefined}
           name={name}
           value={value}
+          placeholder={placeHolder}
           onChange={(e) => setValue(e.target.value)}
           className="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-md"
         />

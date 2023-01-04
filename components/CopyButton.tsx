@@ -21,7 +21,7 @@ export function CopyButton({ textToCopy }: CopyButtonProps) {
     <button
       type="button"
       onClick={copyImageUrl}
-      className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-emerald-700 bg-emerald-100 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+      className="inline-flex items-center px-3 py-2 border border-emerald-700 shadow-sm text-sm leading-4 font-medium rounded-md text-emerald-700 hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
     >
       {buttonState === 'copy' ? (
         <>

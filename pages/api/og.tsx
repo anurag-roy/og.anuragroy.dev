@@ -16,10 +16,11 @@ const getAloeVera = fetch(
 ).then((res) => res.arrayBuffer());
 
 export default async function handler(req: NextRequest) {
-  const WEBSITE = 'anuragroy.dev';
   const DEFAULT_TITLE = 'OG Image';
   const DEFAULT_DESCRIPTION =
     'Add `title` and `description` to the URL as query params to populate the card with your own content.';
+  const DEFAULT_AUTHOR_IMAGE = 'https://og.anuragroy.dev/assets/memoji.png';
+  const DEFAULT_AUTHOR = 'anuragroy.dev';
   const DEFAULT_THEME = 'rose';
 
   const [satoshi, clashDisplay, aloeVera] = await Promise.all([
@@ -38,6 +39,16 @@ export default async function handler(req: NextRequest) {
   const description = searchParams.has('description')
     ? searchParams.get('description')
     : DEFAULT_DESCRIPTION;
+
+  const authorImage = searchParams.has('authorImage')
+    ? searchParams.get('authorImage')!
+    : DEFAULT_AUTHOR_IMAGE;
+
+  const author = searchParams.has('author')
+    ? searchParams.get('author')
+    : DEFAULT_AUTHOR;
+
+  const logo = searchParams.has('logo') ? searchParams.get('logo') : null;
 
   const theme = searchParams.has('theme')
     ? searchParams.get('theme')
@@ -58,19 +69,25 @@ export default async function handler(req: NextRequest) {
           {description}
         </p>
         <div tw="w-full flex flex-row items-center">
-          <img
-            src="https://og.anuragroy.dev/assets/memoji.png"
-            height="56px"
-            width="56px"
-            tw={`mr-2 bg-${theme}-300 rounded-full`}
-          />
+          {authorImage?.startsWith('http') ? (
+            <img
+              src={authorImage}
+              tw={`mr-4 h-14 w-14 bg-${theme}-300 rounded-full`}
+            />
+          ) : (
+            <span tw="mr-4 text-5xl">{authorImage}</span>
+          )}
           <span
             tw={`text-5xl text-${theme}-600 mr-auto`}
             style={{ fontFamily: 'AloeVera' }}
           >
-            {WEBSITE}
+            {author}
           </span>
-          <span tw="text-5xl">🐦</span>
+          {logo?.startsWith('http') ? (
+            <img src={logo} tw="h-14 w-14" />
+          ) : (
+            <span tw="text-5xl">{logo}</span>
+          )}
         </div>
       </div>
     ),
