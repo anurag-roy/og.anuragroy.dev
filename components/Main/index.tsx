@@ -81,7 +81,7 @@ export function Main() {
         <button
           type="button"
           onClick={() => setImageUrl(getImageUrl())}
-          className="ml-auto mt-8 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+          className="ml-auto mt-8 inline-flex items-center px-4 py-2 text-base font-medium rounded-full text-white animated-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
         >
           Update preview and URL
           <ArrowLongRightIcon className="ml-3 h-5 w-5" aria-hidden="true" />
@@ -94,7 +94,7 @@ export function Main() {
           <img
             src={imageUrl}
             alt="Generated OG image preview"
-            className="mt-1 rounded-md aspect-[1200/630] w-full"
+            className="mt-1 rounded-lg aspect-[1200/630] w-full"
           />
         </div>
         <div>
@@ -102,7 +102,7 @@ export function Main() {
             <p className="text-sm font-medium text-gray-700">Generated URL</p>
             <CopyButton textToCopy={imageUrl} />
           </div>
-          <code className="block mt-2 p-4 bg-gray-200 break-all select-all rounded-md">
+          <code className="block mt-2 p-4 bg-gray-200 break-all select-all rounded-lg">
             {imageUrl}
           </code>
         </div>

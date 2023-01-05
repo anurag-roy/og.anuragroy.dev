@@ -5,7 +5,7 @@ export function Header() {
         width="32"
         height="32"
         viewBox="0 0 24 24"
-        className="text-emerald-600"
+        className="text-primary-600"
       >
         <path
           fill="currentColor"
@@ -28,7 +28,7 @@ export function Header() {
       <a
         href="https://github.com/anurag-roy/og.anuragroy.dev"
         target="_blank"
-        className="ml-auto text-gray-400 hover:text-emerald-600"
+        className="ml-auto text-gray-400 hover:text-primary-600"
         title="View source on GitHub"
       >
         <svg

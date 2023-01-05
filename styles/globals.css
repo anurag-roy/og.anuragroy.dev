@@ -7,3 +7,24 @@ body,
 #__next {
   height: 100%;
 }
+
+.animated-button {
+  background-image: linear-gradient(
+    45deg,
+    theme('colors.primary.600') 0,
+    theme('colors.primary.400') 50%,
+    theme('colors.primary.600') 100%
+  );
+  transition: background-position 0.4s;
+  background-size: 300% auto;
+  background-position: 0;
+}
+
+.animated-button:active {
+  background: theme('colors.primary.400');
+}
+
+.animated-button:hover,
+.animated-button:focus {
+  background-position: 100%;
+}

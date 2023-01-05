@@ -32,7 +32,7 @@ export function TextInput({
           value={value}
           placeholder={placeHolder}
           onChange={(e) => setValue(e.target.value)}
-          className="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-lg"
         />
       </div>
     </div>
