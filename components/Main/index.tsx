@@ -43,7 +43,7 @@ export function Main() {
   const [imageUrl, setImageUrl] = useState(getImageUrl());
 
   return (
-    <main className="py-8 grid grid-cols-[1fr_2fr] gap-x-20">
+    <main className="py-12 grid grid-cols-[1fr_2fr] gap-x-20">
       {/* LHS Form */}
       <div className="flex flex-col gap-6">
         <ThemeComboBox selectedTheme={theme} setSelectedTheme={setTheme} />

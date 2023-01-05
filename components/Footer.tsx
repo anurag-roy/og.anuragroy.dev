@@ -1,12 +1,12 @@
 export function Footer() {
   return (
-    <footer className="border-t-2 border-gray-200 mt-16 py-6">
+    <footer className="border-t-2 border-gray-200 py-6">
       <ul className="flex gap-4 justify-center">
         <li>
           <a
             href="https://twitter.com/anurag__roy"
             target="_blank"
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:text-emerald-600"
           >
             <svg
               role="img"
@@ -26,7 +26,7 @@ export function Footer() {
           <a
             href="https://github.com/anurag-roy"
             target="_blank"
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:text-emerald-600"
           >
             <svg
               role="img"
@@ -43,13 +43,10 @@ export function Footer() {
           </a>
         </li>
       </ul>
-      <p className="mt-4 text-center text-sm text-gray-500 [&>a]:underline-offset-2 [&>a:hover]:text-gray-700 [&>a:hover]:underline">
-        © {new Date().getFullYear()} Anurag Roy.{' '}
-        <a
-          href="https://github.com/anurag-roy/og.anuragroy.dev"
-          target="_blank"
-        >
-          Open source
+      <p className="mt-4 text-center text-sm text-gray-500 [&>a]:underline-offset-2 [&>a:hover]:text-emerald-600">
+        © {new Date().getFullYear()} Anurag Roy. Built with{' '}
+        <a href="https://nextjs.org/" target="_blank">
+          Next.js
         </a>{' '}
         and hosted on{' '}
         <a href="https://vercel.com" target="_blank">
