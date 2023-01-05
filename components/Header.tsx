@@ -1,6 +1,6 @@
 export function Header() {
   return (
-    <header className="flex flex-row items-center gap-4 pb-8 border-b-2">
+    <header className="flex flex-row items-center gap-4 pb-4 border-b-2 lg:pb-8">
       <svg
         width="32"
         height="32"
@@ -22,7 +22,7 @@ export function Header() {
           opacity=".25"
         />
       </svg>
-      <h1 className="font-bold font-mono text-4xl text-gray-900">
+      <h1 className="font-bold font-mono text-2xl text-gray-900 lg:text-4xl">
         og.anuragroy.dev
       </h1>
       <a

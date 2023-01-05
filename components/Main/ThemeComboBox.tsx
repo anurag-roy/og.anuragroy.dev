@@ -97,7 +97,7 @@ export function ThemeComboBox({
                     </div>
 
                     {selected && (
-                      <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary-600">
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-primary-600">
                         <CheckIcon className="h-5 w-5" aria-hidden="true" />
                       </span>
                     )}
