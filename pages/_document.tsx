@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body className="p-10">
+      <body className="max-w-6xl mx-auto p-10">
         <Main />
         <NextScript />
       </body>

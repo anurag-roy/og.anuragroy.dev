@@ -1,7 +1,7 @@
 import { Combobox } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { classNames, toTitleCase } from '../utils/utils';
+import { classNames, toTitleCase } from '../../utils/utils';
 
 // All tailwind color names
 const themes = [

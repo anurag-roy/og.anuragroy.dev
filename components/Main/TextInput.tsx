@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react';
-import { toTitleCase } from '../utils/utils';
+import { toTitleCase } from '../../utils/utils';
 
 interface TextInputProps {
   name: string;
