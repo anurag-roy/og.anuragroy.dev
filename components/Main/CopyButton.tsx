@@ -11,11 +11,17 @@ interface CopyButtonProps {
 export function CopyButton({ textToCopy }: CopyButtonProps) {
   const [buttonState, setButtonState] = useState<'copy' | 'copied'>('copy');
   const copyImageUrl = async () => {
-    await navigator.clipboard.writeText(textToCopy);
-    setButtonState('copied');
-    setTimeout(() => {
-      setButtonState('copy');
-    }, 1000);
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setButtonState('copied');
+      setTimeout(() => {
+        setButtonState('copy');
+      }, 1000);
+    } catch (error) {
+      alert(
+        'Sorry, cannot copy URL to your clipboard. Please select and copy the URL manually.'
+      );
+    }
   };
   return (
     <button

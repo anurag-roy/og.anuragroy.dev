@@ -7,10 +7,12 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>og.anuragroy.dev - OG Image Generator for anuragroy.dev</title>
+        <title>
+          og.anuragroy.dev - OpenGraph Image Generator for anuragroy.dev
+        </title>
         <meta
           name="description"
-          content="Open graph image generator for anuragroy.dev"
+          content="OpenGraph image generator for anuragroy.dev"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />

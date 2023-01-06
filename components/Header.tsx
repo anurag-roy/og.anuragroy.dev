@@ -28,7 +28,7 @@ export function Header() {
       <a
         href="https://github.com/anurag-roy/og.anuragroy.dev"
         target="_blank"
-        className="ml-auto text-gray-400 hover:text-primary-600"
+        className="ml-auto text-gray-400 hover:text-gray-600"
         title="View source on GitHub"
       >
         <svg

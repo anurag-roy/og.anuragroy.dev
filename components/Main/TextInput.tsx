@@ -4,6 +4,7 @@ interface TextInputProps {
   name: string;
   defaultValue?: string;
   placeHolder: string;
+  helpText?: string;
   isTextArea?: boolean;
 }
 
@@ -11,6 +12,7 @@ export function TextInput({
   name,
   defaultValue,
   placeHolder,
+  helpText,
   isTextArea = false,
 }: TextInputProps) {
   const nameInTitleCase = toTitleCase(name);
@@ -28,9 +30,15 @@ export function TextInput({
           name={name}
           defaultValue={defaultValue}
           placeholder={placeHolder}
+          aria-describedby={helpText ? `${name}-description` : undefined}
           className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-lg"
         />
       </div>
+      {helpText && (
+        <p className="mt-2 text-sm text-gray-500" id={`${name}-description`}>
+          {helpText}
+        </p>
+      )}
     </div>
   );
 }

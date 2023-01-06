@@ -5,16 +5,20 @@ import { TextInput } from './TextInput';
 import { ThemeComboBox } from './ThemeComboBox';
 
 export function Main() {
-  const BASE_IMAGE_API_URL = '/api/og';
+  const BASE_PATH = 'https://og.anuragroy.dev';
+  const BASE_IMAGE_API_URL = BASE_PATH + '/api';
 
   const defaultValues = {
-    title: 'OG Card Title',
+    title: 'Dynamic OG Images using @vercel/og',
     description:
-      'Generate beautiful open graph cards on the fly with custom content and color themes, being used to power anuragroy.dev',
+      "Taking a look at Vercel's new library to generate dynamic OpenGraph images on the fly.",
     logo: '🐦',
   };
 
-  const [imageUrl, setImageUrl] = useState('');
+  const initialImageUrl = `${BASE_IMAGE_API_URL}?${new URLSearchParams(
+    defaultValues
+  ).toString()}`;
+  const [imageUrl, setImageUrl] = useState(initialImageUrl);
 
   const updateImageUrl = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,6 +56,7 @@ export function Main() {
           name="logo"
           defaultValue={defaultValues.logo}
           placeHolder="https://og.com/logo.svg"
+          helpText="Accepts an URL or emojis"
         />
         <button
           type="submit"

@@ -16,9 +16,9 @@ const getAloeVera = fetch(
 ).then((res) => res.arrayBuffer());
 
 export default async function handler(req: NextRequest) {
-  const DEFAULT_TITLE = 'OG Image';
+  const DEFAULT_TITLE = 'Anurag Roy';
   const DEFAULT_DESCRIPTION =
-    'Add `title` and `description` to the URL as query params to populate the card with your own content.';
+    'Full-stack developer and aspiring designer from Kolkata, India.';
   const DEFAULT_AVATAR = 'https://og.anuragroy.dev/assets/memoji.png';
   const DEFAULT_AUTHOR = 'anuragroy.dev';
   const DEFAULT_THEME = 'rose';
