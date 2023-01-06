@@ -1,6 +1,6 @@
 export function Header() {
   return (
-    <header className="flex flex-row items-center gap-4 pb-4 border-b-2 lg:pb-8">
+    <header className="flex flex-row items-center gap-2 pb-4 border-b-2 sm:gap-4 lg:pb-8">
       <svg
         width="32"
         height="32"

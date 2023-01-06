@@ -1,5 +1,5 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { CopyButton } from './CopyButton';
 import { TextInput } from './TextInput';
 import { ThemeComboBox } from './ThemeComboBox';
@@ -7,80 +7,54 @@ import { ThemeComboBox } from './ThemeComboBox';
 export function Main() {
   const BASE_IMAGE_API_URL = '/api/og';
 
-  const [title, setTitle] = useState('OG Card Title');
-  const [description, setDescription] = useState(
-    'Generate beautiful open graph cards on the fly with custom content and color themes, being used to power anuragroy.dev'
-  );
-  const [authorImage, setAuthorImage] = useState('');
-  const [author, setAuthor] = useState('');
-  const [logo, setLogo] = useState('🐦');
-  const [theme, setTheme] = useState('rose');
-
-  const getImageUrl = () => {
-    const params = [];
-    if (title) {
-      params.push(`title=${encodeURIComponent(title)}`);
-    }
-    if (description) {
-      params.push(`description=${encodeURIComponent(description)}`);
-    }
-    if (authorImage) {
-      params.push(`authorImage=${encodeURIComponent(authorImage)}`);
-    }
-    if (author) {
-      params.push(`author=${encodeURIComponent(author)}`);
-    }
-    if (logo) {
-      params.push(`logo=${encodeURIComponent(logo)}`);
-    }
-    if (theme) {
-      params.push(`theme=${encodeURIComponent(theme)}`);
-    }
-
-    return `${BASE_IMAGE_API_URL}?${params.join('&')}`;
+  const defaultValues = {
+    title: 'OG Card Title',
+    description:
+      'Generate beautiful open graph cards on the fly with custom content and color themes, being used to power anuragroy.dev',
+    logo: '🐦',
   };
 
-  const [imageUrl, setImageUrl] = useState(getImageUrl());
+  const [imageUrl, setImageUrl] = useState('');
+
+  const updateImageUrl = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    for (let [name, value] of Array.from(formData.entries())) {
+      if (value === '') formData.delete(name);
+    }
+    const searchParams = new URLSearchParams(formData as any).toString();
+
+    setImageUrl(`${BASE_IMAGE_API_URL}?${searchParams}`);
+  };
 
   return (
     <main className="py-6 grid grid-cols-1 gap-y-8 lg:py-12 lg:grid-cols-[1fr_2fr] lg:gap-x-20">
       {/* LHS Form */}
-      <div className="max-w-md mx-auto w-full flex flex-col gap-4 lg:gap-6">
-        <ThemeComboBox selectedTheme={theme} setSelectedTheme={setTheme} />
+      <form
+        onSubmit={updateImageUrl}
+        className="max-w-md mx-auto w-full flex flex-col gap-4 lg:gap-6"
+      >
+        <ThemeComboBox />
         <TextInput
           name="title"
-          value={title}
-          setValue={setTitle}
+          defaultValue={defaultValues.title}
           placeHolder="Image title"
         />
         <TextInput
           name="description"
-          value={description}
-          setValue={setDescription}
+          defaultValue={defaultValues.description}
           placeHolder="Image description"
           isTextArea={true}
         />
-        <TextInput
-          name="author image"
-          value={authorImage}
-          setValue={setAuthorImage}
-          placeHolder="https://og.com/image.png"
-        />
-        <TextInput
-          name="author"
-          value={author}
-          setValue={setAuthor}
-          placeHolder="Jane Smith"
-        />
+        <TextInput name="avatar" placeHolder="https://og.com/image.png" />
+        <TextInput name="author" placeHolder="Jane Smith" />
         <TextInput
           name="logo"
-          value={logo}
-          setValue={setLogo}
+          defaultValue={defaultValues.logo}
           placeHolder="https://og.com/logo.svg"
         />
         <button
-          type="button"
-          onClick={() => setImageUrl(getImageUrl())}
+          type="submit"
           className="mx-auto mt-4 lg:mt-6 inline-flex items-center px-4 py-2 text-base font-medium rounded-full text-white animated-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
         >
           Update preview and URL
@@ -89,7 +63,7 @@ export function Main() {
             aria-hidden="true"
           />
         </button>
-      </div>
+      </form>
       {/* RHS Output */}
       <div className="space-y-6">
         <div>

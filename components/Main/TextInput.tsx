@@ -1,18 +1,15 @@
-import type { Dispatch, SetStateAction } from 'react';
 import { toTitleCase } from '../../utils/utils';
 
 interface TextInputProps {
   name: string;
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  defaultValue?: string;
   placeHolder: string;
   isTextArea?: boolean;
 }
 
 export function TextInput({
   name,
-  value,
-  setValue,
+  defaultValue,
   placeHolder,
   isTextArea = false,
 }: TextInputProps) {
@@ -29,9 +26,8 @@ export function TextInput({
           type={isTextArea ? undefined : 'text'}
           rows={isTextArea ? 4 : undefined}
           name={name}
-          value={value}
+          defaultValue={defaultValue}
           placeholder={placeHolder}
-          onChange={(e) => setValue(e.target.value)}
           className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-lg"
         />
       </div>

@@ -1,6 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { classNames, toTitleCase } from '../../utils/utils';
 
 // All tailwind color names
@@ -29,15 +29,7 @@ const themes = [
   'rose',
 ] as const;
 
-interface ThemeComboBoxProps {
-  selectedTheme: string;
-  setSelectedTheme: Dispatch<SetStateAction<string>>;
-}
-
-export function ThemeComboBox({
-  selectedTheme,
-  setSelectedTheme,
-}: ThemeComboBoxProps) {
+export function ThemeComboBox() {
   const [query, setQuery] = useState('');
 
   const filteredThemes =
@@ -48,7 +40,7 @@ export function ThemeComboBox({
         });
 
   return (
-    <Combobox as="div" value={selectedTheme} onChange={setSelectedTheme}>
+    <Combobox as="div" defaultValue="rose" name="theme">
       <Combobox.Label className="block text-sm font-medium text-gray-700">
         Theme
       </Combobox.Label>

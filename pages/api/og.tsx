@@ -19,7 +19,7 @@ export default async function handler(req: NextRequest) {
   const DEFAULT_TITLE = 'OG Image';
   const DEFAULT_DESCRIPTION =
     'Add `title` and `description` to the URL as query params to populate the card with your own content.';
-  const DEFAULT_AUTHOR_IMAGE = 'https://og.anuragroy.dev/assets/memoji.png';
+  const DEFAULT_AVATAR = 'https://og.anuragroy.dev/assets/memoji.png';
   const DEFAULT_AUTHOR = 'anuragroy.dev';
   const DEFAULT_THEME = 'rose';
 
@@ -40,9 +40,9 @@ export default async function handler(req: NextRequest) {
     ? searchParams.get('description')
     : DEFAULT_DESCRIPTION;
 
-  const authorImage = searchParams.has('authorImage')
-    ? searchParams.get('authorImage')!
-    : DEFAULT_AUTHOR_IMAGE;
+  const avatar = searchParams.has('avatar')
+    ? searchParams.get('avatar')!
+    : DEFAULT_AVATAR;
 
   const author = searchParams.has('author')
     ? searchParams.get('author')
@@ -69,13 +69,13 @@ export default async function handler(req: NextRequest) {
           {description}
         </p>
         <div tw="w-full flex flex-row items-center">
-          {authorImage?.startsWith('http') ? (
+          {avatar?.startsWith('http') ? (
             <img
-              src={authorImage}
+              src={avatar}
               tw={`mr-4 h-14 w-14 bg-${theme}-300 rounded-full`}
             />
           ) : (
-            <span tw="mr-4 text-5xl">{authorImage}</span>
+            <span tw="mr-4 text-5xl">{avatar}</span>
           )}
           <span
             tw={`text-5xl text-${theme}-600 mr-auto`}
