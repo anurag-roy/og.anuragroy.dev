@@ -77,6 +77,7 @@ export function Main() {
           <img
             src={imageUrl}
             alt="Generated OG image preview"
+            loading="lazy"
             className="mt-1 rounded-lg aspect-[1200/630] w-full"
           />
         </div>
