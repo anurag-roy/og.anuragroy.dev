@@ -29,7 +29,11 @@ const themes = [
   'rose',
 ] as const;
 
-export function ThemeComboBox() {
+interface ThemeComboBoxProps {
+  defaultValue: string;
+}
+
+export function ThemeComboBox({ defaultValue }: ThemeComboBoxProps) {
   const [query, setQuery] = useState('');
 
   const filteredThemes =
@@ -40,7 +44,7 @@ export function ThemeComboBox() {
         });
 
   return (
-    <Combobox as="div" defaultValue="rose" name="theme">
+    <Combobox as="div" defaultValue={defaultValue} name="theme">
       <Combobox.Label className="block text-sm font-medium text-gray-700">
         Theme
       </Combobox.Label>

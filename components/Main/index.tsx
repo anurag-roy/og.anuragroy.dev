@@ -9,6 +9,7 @@ export function Main() {
   const BASE_IMAGE_API_URL = BASE_PATH + '/api';
 
   const defaultValues = {
+    theme: 'rose',
     title: 'Dynamic OG Images using @vercel/og',
     description:
       "Taking a look at Vercel's new library to generate dynamic OpenGraph images on the fly.",
@@ -38,7 +39,7 @@ export function Main() {
         onSubmit={updateImageUrl}
         className="max-w-md mx-auto w-full flex flex-col gap-4 lg:gap-6"
       >
-        <ThemeComboBox />
+        <ThemeComboBox defaultValue={defaultValues.theme} />
         <TextInput
           name="title"
           defaultValue={defaultValues.title}
