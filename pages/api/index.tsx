@@ -19,7 +19,7 @@ export default async function handler(req: NextRequest) {
   const DEFAULT_TITLE = 'Anurag Roy';
   const DEFAULT_DESCRIPTION =
     'Full-stack developer and aspiring designer from Kolkata, India.';
-  const DEFAULT_AVATAR = 'https://og.anuragroy.dev/assets/memoji.png';
+  const DEFAULT_AVATAR = 'https://og.anuragroy.dev/memoji.png';
   const DEFAULT_AUTHOR = 'anuragroy.dev';
   const DEFAULT_THEME = 'rose';
 
