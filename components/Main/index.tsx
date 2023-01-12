@@ -12,7 +12,7 @@ export function Main() {
     theme: 'rose',
     title: 'Dynamic OG Images using @vercel/og',
     description:
-      "Taking a look at Vercel's new library to generate dynamic OpenGraph images on the fly.",
+      "Taking a look at Vercel's new library to generate dynamic OpenGraph images on the fly!",
     logo: '🐦',
   };
 
