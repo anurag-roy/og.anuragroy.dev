@@ -57,7 +57,6 @@ export function Main() {
           name="logo"
           defaultValue={defaultValues.logo}
           placeHolder="https://og.com/logo.svg"
-          helpText="Accepts an URL or emojis"
         />
         <button
           type="submit"
