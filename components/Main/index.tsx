@@ -5,7 +5,7 @@ import { TextInput } from './TextInput';
 import { ThemeComboBox } from './ThemeComboBox';
 
 export function Main() {
-  const BASE_PATH = '';
+  const BASE_PATH = 'https://og.anuragroy.dev';
   const BASE_IMAGE_API_URL = BASE_PATH + '/api';
 
   const defaultValues = {
