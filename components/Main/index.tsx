@@ -1,12 +1,13 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { CopyButton } from './CopyButton';
 import { TextInput } from './TextInput';
 import { ThemeComboBox } from './ThemeComboBox';
 
+const getBaseImageUrl = () => window.location.origin + '/api';
+
 export function Main() {
-  const BASE_PATH = 'https://og.anuragroy.dev';
-  const BASE_IMAGE_API_URL = BASE_PATH + '/api';
+  const [imageUrl, setImageUrl] = useState('');
 
   const defaultValues = {
     theme: 'rose',
@@ -16,10 +17,11 @@ export function Main() {
     logo: '🐦',
   };
 
-  const initialImageUrl = `${BASE_IMAGE_API_URL}?${new URLSearchParams(
-    defaultValues
-  ).toString()}`;
-  const [imageUrl, setImageUrl] = useState(initialImageUrl);
+  useEffect(() => {
+    const initialSearchParams = new URLSearchParams(defaultValues).toString();
+    const initialImageUrl = `${getBaseImageUrl()}?${initialSearchParams}`;
+    setImageUrl(initialImageUrl);
+  }, []);
 
   const updateImageUrl = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,7 +31,7 @@ export function Main() {
     }
     const searchParams = new URLSearchParams(formData as any).toString();
 
-    setImageUrl(`${BASE_IMAGE_API_URL}?${searchParams}`);
+    setImageUrl(`${getBaseImageUrl()}?${searchParams}`);
   };
 
   return (
