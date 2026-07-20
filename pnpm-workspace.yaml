@@ -1,3 +1,6 @@
+packages:
+  - '.'
+
 allowBuilds:
   sharp: true
 overrides:
