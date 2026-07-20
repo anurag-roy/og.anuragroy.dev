@@ -1,13 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@theme inline {
+  --color-primary-400: var(--color-blue-400);
+  --color-primary-500: var(--color-blue-500);
+  --color-primary-600: var(--color-blue-600);
+  --color-primary-700: var(--color-blue-700);
+}
 
 .animated-button {
   background-image: linear-gradient(
     45deg,
-    theme('colors.primary.600') 0,
-    theme('colors.primary.400') 50%,
-    theme('colors.primary.600') 100%
+    var(--color-primary-600) 0,
+    var(--color-primary-400) 50%,
+    var(--color-primary-600) 100%
   );
   transition: background-position 0.4s;
   background-size: 300% auto;
@@ -15,7 +21,7 @@
 }
 
 .animated-button:active {
-  background: theme('colors.primary.400');
+  background: var(--color-primary-400);
 }
 
 .animated-button:hover,
