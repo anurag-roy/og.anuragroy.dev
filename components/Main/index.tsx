@@ -1,16 +1,24 @@
-import { ArrowLongRightIcon } from '@heroicons/react/24/solid';
+import { ArrowRightIcon } from 'lucide-react';
 import { FormEvent, useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { CopyButton } from './CopyButton';
 import { TextInput } from './TextInput';
 import { ThemeComboBox } from './ThemeComboBox';
 
-const getBaseImageUrl = () => window.location.origin + '/api';
+const getBaseImageUrl = () => `${window.location.origin}/api`;
 
 export function Main() {
   const [imageUrl, setImageUrl] = useState('');
 
   const defaultValues = {
-    theme: 'rose',
+    theme: 'rose' as const,
     title: 'Dynamic OG Images with @vercel/og',
     description:
       "Taking a look at Vercel's new library to generate dynamic OpenGraph images on the fly",
@@ -19,78 +27,101 @@ export function Main() {
 
   useEffect(() => {
     const initialSearchParams = new URLSearchParams(defaultValues).toString();
-    const initialImageUrl = `${getBaseImageUrl()}?${initialSearchParams}`;
-    setImageUrl(initialImageUrl);
+    setImageUrl(`${getBaseImageUrl()}?${initialSearchParams}`);
   }, []);
 
   const updateImageUrl = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    for (let [name, value] of Array.from(formData.entries())) {
+
+    for (const [name, value] of Array.from(formData.entries())) {
       if (value === '') formData.delete(name);
     }
-    const searchParams = new URLSearchParams(formData as any).toString();
+
+    const searchParams = new URLSearchParams(
+      Array.from(formData.entries()) as Array<[string, string]>
+    ).toString();
 
     setImageUrl(`${getBaseImageUrl()}?${searchParams}`);
   };
 
   return (
-    <main className="py-6 grid grid-cols-1 gap-y-8 lg:py-12 lg:grid-cols-[1fr_2fr] lg:gap-x-20">
-      {/* LHS Form */}
-      <form
-        onSubmit={updateImageUrl}
-        className="max-w-md mx-auto w-full flex flex-col gap-4 lg:gap-6"
-      >
-        <ThemeComboBox defaultValue={defaultValues.theme} />
-        <TextInput
-          name="title"
-          defaultValue={defaultValues.title}
-          placeHolder="Image title"
-        />
-        <TextInput
-          name="description"
-          defaultValue={defaultValues.description}
-          placeHolder="Image description"
-          isTextArea={true}
-        />
-        <TextInput name="avatar" placeHolder="https://og.com/image.png" />
-        <TextInput name="author" placeHolder="Jane Smith" />
-        <TextInput
-          name="logo"
-          defaultValue={defaultValues.logo}
-          placeHolder="https://og.com/logo.svg"
-        />
-        <button
-          type="submit"
-          className="mx-auto mt-4 lg:mt-6 inline-flex items-center px-4 py-2 text-base font-medium rounded-full text-white animated-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-        >
-          Update preview and URL
-          <ArrowLongRightIcon
-            className="ml-3 h-5 w-5 hidden lg:inline-block"
-            aria-hidden="true"
-          />
-        </button>
-      </form>
-      {/* RHS Output */}
+    <main className="grid flex-1 gap-6 py-6 sm:py-8 lg:grid-cols-[minmax(18rem,0.8fr)_minmax(0,1.4fr)] lg:gap-8 lg:py-10">
+      <Card className="h-fit">
+        <CardHeader>
+          <CardTitle>Customize image</CardTitle>
+          <CardDescription>
+            Set the content and color theme for your OpenGraph image.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={updateImageUrl} className="space-y-5">
+            <ThemeComboBox defaultValue={defaultValues.theme} />
+            <TextInput
+              name="title"
+              defaultValue={defaultValues.title}
+              placeholder="Image title"
+            />
+            <TextInput
+              name="description"
+              defaultValue={defaultValues.description}
+              placeholder="Image description"
+              isTextArea
+            />
+            <TextInput name="avatar" placeholder="https://og.com/image.png" />
+            <TextInput name="author" placeholder="Jane Smith" />
+            <TextInput
+              name="logo"
+              defaultValue={defaultValues.logo}
+              placeholder="https://og.com/logo.svg"
+            />
+            <Button type="submit" size="lg" className="w-full">
+              Update preview
+              <ArrowRightIcon data-icon="inline-end" />
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
       <div className="space-y-6">
-        <div>
-          <p className="text-sm font-medium text-gray-700">Preview</p>
-          <img
-            src={imageUrl}
-            alt="Generated OG image preview"
-            loading="lazy"
-            className="mt-1 rounded-lg aspect-[1200/630] w-full"
-          />
-        </div>
-        <div>
-          <div className="flex justify-between items-end">
-            <p className="text-sm font-medium text-gray-700">Generated URL</p>
+        <Card>
+          <CardHeader>
+            <CardTitle>Preview</CardTitle>
+            <CardDescription>
+              Your image updates when you submit the form.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="aspect-[1200/630] overflow-hidden rounded-3xl bg-muted ring-1 ring-border">
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt="Generated OpenGraph image preview"
+                  className="size-full object-cover"
+                />
+              ) : (
+                <div className="flex size-full items-center justify-center text-sm text-muted-foreground">
+                  Preparing preview…
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card size="sm">
+          <CardHeader className="grid grid-cols-[1fr_auto] items-center">
+            <div>
+              <CardTitle>Generated URL</CardTitle>
+              <CardDescription>Ready to paste into your metadata.</CardDescription>
+            </div>
             <CopyButton textToCopy={imageUrl} />
-          </div>
-          <code className="block mt-2 p-4 bg-gray-200 break-all select-all rounded-lg">
-            {imageUrl}
-          </code>
-        </div>
+          </CardHeader>
+          <CardContent>
+            <code className="block max-h-32 overflow-auto break-all rounded-2xl bg-muted px-4 py-3 font-mono text-xs leading-relaxed text-muted-foreground select-all">
+              {imageUrl || 'The generated URL will appear here.'}
+            </code>
+          </CardContent>
+        </Card>
       </div>
     </main>
   );

@@ -1,9 +1,12 @@
-import { toTitleCase } from '../../utils/utils';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { toTitleCase } from '@/utils/utils';
 
 interface TextInputProps {
   name: string;
   defaultValue?: string;
-  placeHolder: string;
+  placeholder: string;
   helpText?: string;
   isTextArea?: boolean;
 }
@@ -11,31 +14,29 @@ interface TextInputProps {
 export function TextInput({
   name,
   defaultValue,
-  placeHolder,
+  placeholder,
   helpText,
   isTextArea = false,
 }: TextInputProps) {
-  const nameInTitleCase = toTitleCase(name);
-  const InputTag = isTextArea ? 'textarea' : 'input';
+  const descriptionId = helpText ? `${name}-description` : undefined;
+  const sharedProps = {
+    id: name,
+    name,
+    defaultValue,
+    placeholder,
+    'aria-describedby': descriptionId,
+  };
 
   return (
-    <div>
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {nameInTitleCase}
-      </label>
-      <div className="mt-1">
-        <InputTag
-          type={isTextArea ? undefined : 'text'}
-          rows={isTextArea ? 4 : undefined}
-          name={name}
-          defaultValue={defaultValue}
-          placeholder={placeHolder}
-          aria-describedby={helpText ? `${name}-description` : undefined}
-          className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-lg"
-        />
-      </div>
+    <div className="space-y-2">
+      <Label htmlFor={name}>{toTitleCase(name)}</Label>
+      {isTextArea ? (
+        <Textarea {...sharedProps} rows={4} />
+      ) : (
+        <Input {...sharedProps} type="text" />
+      )}
       {helpText && (
-        <p className="mt-2 text-sm text-gray-500" id={`${name}-description`}>
+        <p id={descriptionId} className="text-xs text-muted-foreground">
           {helpText}
         </p>
       )}
