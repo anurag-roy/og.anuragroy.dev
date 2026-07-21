@@ -1,11 +1,8 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
-import { getOgThemeColor } from '@/lib/og-colors';
+import { getThemeColor } from '@/lib/colors';
 
 export const runtime = 'edge';
-
-const INTER_FONT_URL =
-  'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf';
 
 const fontCache = new Map<string, ArrayBuffer>();
 
@@ -31,8 +28,8 @@ export async function GET(req: NextRequest) {
 
   const origin = req.nextUrl.origin;
 
-  const [inter, clashDisplay, aloeVera] = await Promise.all([
-    loadFont(INTER_FONT_URL),
+  const [satoshi, clashDisplay, aloeVera] = await Promise.all([
+    loadFont(`${origin}/fonts/satoshi.ttf`),
     loadFont(`${origin}/fonts/clash-display.ttf`),
     loadFont(`${origin}/fonts/aloe-vera.ttf`),
   ]);
@@ -61,9 +58,9 @@ export async function GET(req: NextRequest) {
     ? searchParams.get('theme')!
     : DEFAULT_THEME;
 
-  const backgroundColor = getOgThemeColor(theme, '200');
-  const avatarBackgroundColor = getOgThemeColor(theme, '300');
-  const authorColor = getOgThemeColor(theme, '600');
+  const backgroundColor = getThemeColor(theme, '200');
+  const avatarBackgroundColor = getThemeColor(theme, '300');
+  const authorColor = getThemeColor(theme, '600');
 
   return new ImageResponse(
     (
@@ -76,7 +73,7 @@ export async function GET(req: NextRequest) {
         </h1>
         <p
           tw="mb-16 text-5xl leading-tight text-gray-900"
-          style={{ fontFamily: 'Inter' }}
+          style={{ fontFamily: 'Satoshi' }}
         >
           {description}
         </p>
@@ -109,8 +106,8 @@ export async function GET(req: NextRequest) {
       height: 630,
       fonts: [
         {
-          name: 'Inter',
-          data: inter,
+          name: 'Satoshi',
+          data: satoshi,
         },
         {
           name: 'ClashDisplay',
