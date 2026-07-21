@@ -33,28 +33,44 @@ const themeSwatches = {
   rose: 'bg-rose-600',
 } as const;
 
-const themes = Object.keys(themeSwatches) as Array<keyof typeof themeSwatches>;
+type ThemeName = keyof typeof themeSwatches;
+
+interface ThemeOption {
+  label: string;
+  value: ThemeName;
+}
+
+const themes: ThemeOption[] = (Object.keys(themeSwatches) as ThemeName[]).map(
+  (value) => ({
+    label: value.charAt(0).toUpperCase() + value.slice(1),
+    value,
+  }),
+);
 
 interface ThemeComboBoxProps {
-  defaultValue: keyof typeof themeSwatches;
+  defaultValue: ThemeName;
 }
 
 export function ThemeComboBox({ defaultValue }: ThemeComboBoxProps) {
+  const defaultTheme = themes.find((theme) => theme.value === defaultValue);
+
   return (
     <div className="space-y-2">
       <Label htmlFor="theme">Theme</Label>
-      <Combobox items={themes} defaultValue={defaultValue} name="theme">
+      <Combobox items={themes} defaultValue={defaultTheme} name="theme">
         <ComboboxInput id="theme" className="w-full" placeholder="Select a theme" />
         <ComboboxContent>
           <ComboboxEmpty>No theme found.</ComboboxEmpty>
           <ComboboxList>
             {(item) => {
-              const theme = item as keyof typeof themeSwatches;
+              const theme = item as ThemeOption;
 
               return (
-                <ComboboxItem key={theme} value={theme}>
-                  <span className={`size-3 rounded-full ${themeSwatches[theme]}`} />
-                  <span className="capitalize">{theme}</span>
+                <ComboboxItem key={theme.value} value={theme}>
+                  <span
+                    className={`size-3 rounded-full ${themeSwatches[theme.value]}`}
+                  />
+                  <span>{theme.label}</span>
                 </ComboboxItem>
               );
             }}
