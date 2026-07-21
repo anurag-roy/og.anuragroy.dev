@@ -4,6 +4,13 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@tanstack/react-virtual': 3.14.6
+  '@tanstack/virtual-core': 3.17.4
+  baseline-browser-mapping: 2.10.43
+  enhanced-resolve: 5.24.2
+  fflate: 0.7.4
+
 importers:
 
   .:
