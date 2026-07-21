@@ -52,7 +52,7 @@ npm run dev
 
 This will start a local development server where you will be able to make changes to the code and preview them live.
 
-- To customise the actual generated image, you have to edit `pages/api/index.tsx`.
+- To customise the actual generated image, you have to edit `app/api/route.tsx`.
 
   Here, you can edit the fonts used, parameters accepted by the API, look and feel of the image, etc. The [Vercel docs have a lot of examples](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation/og-image-examples) which should cover most use cases.
 
@@ -82,7 +82,7 @@ Currently this can only be deployed on Vercel's Edge platform due to the depende
 
 - [Vercel edge functions](https://vercel.com/docs/concepts/functions/edge-functions)
 - [@vercel/og docs](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation/og-image-api)
-- [Next.js docs](https://nextjs.org/docs) (This project uses the Next's Pages Router)
+- [Next.js docs](https://nextjs.org/docs) (This project uses the Next.js App Router)
 
 ## Contact
 
