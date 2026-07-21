@@ -1,17 +1,10 @@
-'use client';
-
-import { LightbulbIcon } from 'lucide-react';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Tips } from './Tips';
+import { Tips } from '@/components/tips';
 
 export function Header() {
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
-
   return (
     <>
-      <header className="flex items-center gap-3 pb-5 sm:pb-7">
+      <header className="flex items-center gap-3 pb-2 sm:pb-3">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
           <svg width="23" height="23" viewBox="0 0 24 24" aria-hidden="true">
             <path
@@ -38,18 +31,7 @@ export function Header() {
             Dynamic OpenGraph image generator
           </p>
         </div>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="ml-auto"
-          onClick={() => setIsAboutOpen(true)}
-          aria-label="Open usage tips"
-          title="Tips on usage"
-        >
-          <LightbulbIcon />
-        </Button>
-        <Tips open={isAboutOpen} setOpen={setIsAboutOpen} />
+        <Tips />
       </header>
       <Separator />
     </>
