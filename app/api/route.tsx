@@ -1,17 +1,22 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
+import { getThemeColor } from '@/lib/colors';
 
 export const runtime = 'edge';
 
-const getSatoshi = fetch(
-  new URL('../../assets/Satoshi.ttf', import.meta.url)
-).then((res) => res.arrayBuffer());
-const getClashDisplay = fetch(
-  new URL('../../assets/ClashDisplay.ttf', import.meta.url)
-).then((res) => res.arrayBuffer());
-const getAloeVera = fetch(
-  new URL('../../assets/AloeVera.ttf', import.meta.url)
-).then((res) => res.arrayBuffer());
+const fontCache = new Map<string, ArrayBuffer>();
+
+async function loadFont(url: string) {
+  const cached = fontCache.get(url);
+
+  if (cached) {
+    return cached;
+  }
+
+  const data = await fetch(url).then((response) => response.arrayBuffer());
+  fontCache.set(url, data);
+  return data;
+}
 
 export async function GET(req: NextRequest) {
   const DEFAULT_TITLE = 'Anurag Roy';
@@ -21,10 +26,12 @@ export async function GET(req: NextRequest) {
   const DEFAULT_AUTHOR = 'anuragroy.dev';
   const DEFAULT_THEME = 'rose';
 
+  const origin = req.nextUrl.origin;
+
   const [satoshi, clashDisplay, aloeVera] = await Promise.all([
-    getSatoshi,
-    getClashDisplay,
-    getAloeVera,
+    loadFont(`${origin}/fonts/satoshi.ttf`),
+    loadFont(`${origin}/fonts/clash-display.ttf`),
+    loadFont(`${origin}/fonts/aloe-vera.ttf`),
   ]);
 
   const { searchParams } = req.nextUrl;
@@ -48,35 +55,41 @@ export async function GET(req: NextRequest) {
   const logo = searchParams.has('logo') ? searchParams.get('logo') : null;
 
   const theme = searchParams.has('theme')
-    ? searchParams.get('theme')
+    ? searchParams.get('theme')!
     : DEFAULT_THEME;
+
+  const backgroundColor = getThemeColor(theme, '200');
+  const avatarBackgroundColor = getThemeColor(theme, '300');
+  const authorColor = getThemeColor(theme, '600');
 
   return new ImageResponse(
     (
       <div
-        tw={`h-full w-full px-20 py-16 bg-${theme}-200 flex flex-col justify-between`}
+        tw="flex h-full w-full flex-col justify-between px-20 py-16"
+        style={{ backgroundColor }}
       >
         <h1 tw="text-8xl leading-none" style={{ fontFamily: 'ClashDisplay' }}>
           {title}
         </h1>
         <p
-          tw="mb-16 text-5xl text-gray-900 leading-tight"
+          tw="mb-16 text-5xl leading-tight text-gray-900"
           style={{ fontFamily: 'Satoshi' }}
         >
           {description}
         </p>
-        <div tw="w-full flex flex-row items-center">
+        <div tw="flex w-full flex-row items-center">
           {avatar?.startsWith('http') ? (
             <img
               src={avatar}
-              tw={`mr-4 h-14 w-14 bg-${theme}-300 rounded-full`}
+              tw="mr-4 h-14 w-14 rounded-full"
+              style={{ backgroundColor: avatarBackgroundColor }}
             />
           ) : (
             <span tw="mr-4 text-5xl">{avatar}</span>
           )}
           <span
-            tw={`text-5xl text-${theme}-600 mr-auto`}
-            style={{ fontFamily: 'AloeVera' }}
+            tw="mr-auto text-5xl"
+            style={{ fontFamily: 'AloeVera', color: authorColor }}
           >
             {author}
           </span>

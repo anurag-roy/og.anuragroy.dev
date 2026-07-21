@@ -9,7 +9,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "generate:og-colors": "node scripts/generate-og-colors.mjs"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
@@ -17,6 +18,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vercel/og": "^0.11.1",
+    "culori": "^4.0.2",
     "next": "^16.2.10",
     "postcss": "^8.5.20",
     "typescript": "^6.0.3"
