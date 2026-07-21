@@ -1,18 +1,25 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
-import { getThemeColor } from '@/lib/colors';
+import { getOgThemeColor } from '@/lib/og-colors';
 
 export const runtime = 'edge';
 
-const getInter = fetch(
-  new URL('../../assets/inter.ttf', import.meta.url)
-).then((res) => res.arrayBuffer());
-const getClashDisplay = fetch(
-  new URL('../../assets/clash-display.ttf', import.meta.url)
-).then((res) => res.arrayBuffer());
-const getAloeVera = fetch(
-  new URL('../../assets/aloe-vera.ttf', import.meta.url)
-).then((res) => res.arrayBuffer());
+const INTER_FONT_URL =
+  'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf';
+
+const fontCache = new Map<string, ArrayBuffer>();
+
+async function loadFont(url: string) {
+  const cached = fontCache.get(url);
+
+  if (cached) {
+    return cached;
+  }
+
+  const data = await fetch(url).then((response) => response.arrayBuffer());
+  fontCache.set(url, data);
+  return data;
+}
 
 export async function GET(req: NextRequest) {
   const DEFAULT_TITLE = 'Anurag Roy';
@@ -22,10 +29,12 @@ export async function GET(req: NextRequest) {
   const DEFAULT_AUTHOR = 'anuragroy.dev';
   const DEFAULT_THEME = 'rose';
 
+  const origin = req.nextUrl.origin;
+
   const [inter, clashDisplay, aloeVera] = await Promise.all([
-    getInter,
-    getClashDisplay,
-    getAloeVera,
+    loadFont(INTER_FONT_URL),
+    loadFont(`${origin}/fonts/clash-display.ttf`),
+    loadFont(`${origin}/fonts/aloe-vera.ttf`),
   ]);
 
   const { searchParams } = req.nextUrl;
@@ -52,9 +61,9 @@ export async function GET(req: NextRequest) {
     ? searchParams.get('theme')!
     : DEFAULT_THEME;
 
-  const backgroundColor = getThemeColor(theme, '200');
-  const avatarBackgroundColor = getThemeColor(theme, '300');
-  const authorColor = getThemeColor(theme, '600');
+  const backgroundColor = getOgThemeColor(theme, '200');
+  const avatarBackgroundColor = getOgThemeColor(theme, '300');
+  const authorColor = getOgThemeColor(theme, '600');
 
   return new ImageResponse(
     (
