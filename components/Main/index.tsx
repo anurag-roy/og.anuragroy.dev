@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRightIcon } from 'lucide-react';
 import { FormEvent, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
