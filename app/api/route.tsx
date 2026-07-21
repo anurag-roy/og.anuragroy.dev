@@ -1,9 +1,7 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 const getSatoshi = fetch(
   new URL('../../assets/Satoshi.ttf', import.meta.url)
@@ -15,7 +13,7 @@ const getAloeVera = fetch(
   new URL('../../assets/AloeVera.ttf', import.meta.url)
 ).then((res) => res.arrayBuffer());
 
-export default async function handler(req: NextRequest) {
+export async function GET(req: NextRequest) {
   const DEFAULT_TITLE = 'Anurag Roy';
   const DEFAULT_DESCRIPTION =
     'Full-stack developer and aspiring designer from Kolkata, India.';
@@ -31,7 +29,6 @@ export default async function handler(req: NextRequest) {
 
   const { searchParams } = req.nextUrl;
 
-  // get content from query params
   const title = searchParams.has('title')
     ? searchParams.get('title')
     : DEFAULT_TITLE;
